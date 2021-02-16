@@ -50,7 +50,14 @@ spec:
 							echo "Use the line below when we switch to the actual repo"
 							// sh 'for i in ESBAuditClient ESBAuditLog ESBErrorTranslator TaxESB FraudESB FulfillmentESB PaymentESB ESBRadial ESBAutomatedQueueRetry AlertESB OrderReconESB;do gradle --no-daemon -p ${i} clean build;done'
 							echo "Remove the line below when we switch to the actual repo"
-							sh 'mvn -f sample-java-app/pom.xml package '
+							sh '''
+							mvn -f sample-java-app/pom.xml package 
+							Date=`date +%Y%m%d`
+							
+							mv sample-java-app/target/sample-1.0.0-SNAPSHOT.jar sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar
+							ls -lrt sample-java-app/target/
+							
+							'''
 							propfile = readProperties(file: './project.properties')	
 							if (propfile['javadoc'] == "true") {
 								sh 'mvn javadoc:aggregate'

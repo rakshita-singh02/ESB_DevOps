@@ -132,6 +132,7 @@
       			<id>snapshots</id>
       			<name>Archiva Managed Snapshot Repository</name>
       			<url>http://35.188.92.10/repository/snapshots/</url>
+			<file>${build.directory}/${project.build.finalName}.${project.packaging}</file>
       			<releases>
         			<enabled>false</enabled>
       			</releases>

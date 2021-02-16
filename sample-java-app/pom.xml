@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.buildpacks.example</groupId>
 	<artifactId>sample</artifactId>
-	<version>${BUILD_NUMBER}_${BRANCH_NAME}-SNAPSHOT</version>
+	<version>${BUILD_NUMBER}_${git.branch}-SNAPSHOT</version>
 	<name>sample</name>
 	<description>Sample Java Application</description>
 

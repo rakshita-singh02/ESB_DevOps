@@ -39,6 +39,7 @@ spec:
 		HOSTS_DEV_DEPLOY="10.6.74.91, 10.6.74.92"
 		USERNAME_RELEASE='muleadmin'
 		HOSTS_RELEASE_DEPLOY="10.6.74.93, 10.6.74.94"
+		BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
 	}
 	stages {
 		stage('Build & Unit Test') {
@@ -54,7 +55,7 @@ spec:
 							sh 'mvn -f sample-java-app/pom.xml package'
 							sh 'Date=`date +%Y%m%d` '
 							
-							sh 'mv sample-java-app/target/sample-1.0.0-SNAPSHOT.jar sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_{env.BRANCH_NAME}.jar'
+							sh 'mv sample-java-app/target/sample-1.0.0-SNAPSHOT.jar sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar'
 							sh 'ls -lrt sample-java-app/target/'
 							
 							

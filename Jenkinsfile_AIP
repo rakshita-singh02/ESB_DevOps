@@ -51,6 +51,7 @@ spec:
 							// sh 'for i in ESBAuditClient ESBAuditLog ESBErrorTranslator TaxESB FraudESB FulfillmentESB PaymentESB ESBRadial ESBAutomatedQueueRetry AlertESB OrderReconESB;do gradle --no-daemon -p ${i} clean build;done'
 							echo "Remove the line below when we switch to the actual repo"
 							sh 'mvn -f sample-java-app/pom.xml clean package'
+							sh 'mv sample-0.0.1-SNAPSHOT.jar sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar'
 							propfile = readProperties(file: './project.properties')	
 							if (propfile['javadoc'] == "true") {
 								sh 'mvn javadoc:aggregate'
@@ -103,13 +104,9 @@ spec:
 							sh "cd $WORKSPACE/artifacts/ && tar -cvzf artifact.tar * && md5sum artifact.tar archiveArtifacts artifacts: 'artifacts/*.tar', fingerprint: true 
 							*/
 							echo 'Remove the below 3 lines after switching to the actual ESB repo'
-							sh 'cd sample-java-app/target/'
-							sh 'mv sample-0.0.1-SNAPSHOT.jar sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar'
+							//sh 'mv sample-java-app/target/sample-0.0.1-SNAPSHOT.jar sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar'
 							sh 'ls -lrt sample-java-app/target/'
-							sh '$pwd'
-							sh 'cat /$WORKSPACE/sample-java-app/pom.xml'
-							sh 'mvn -X deploy:deploy-file  -Dfile=/$WORKSPACE/sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar -DpomFile=/$WORKSPACE/sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/'	
-							echo "Archiva successfully pushed"
+							sh 'mvn -X deploy:deploy-file  -Dfile=sample-java-app/target/sample-build_${BUILD_NUMBER}-branch_${BRANCH_NAME}.jar -DpomFile=sample-java-app/pom.xml -DrepositoryId=snapshots -Durl=https://archiva.sgn.devops.accentureanalytics.com/repository/snapshots/'
 						}
 					}
 				}
